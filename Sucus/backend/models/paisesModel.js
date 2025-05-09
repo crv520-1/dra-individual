@@ -1,7 +1,7 @@
 const db = require('../config/db');
 
 // Obtener todos los paises
-const getPaises = async () => {
+exports.getPaises = async () => {
     try {
         const [rows] = await db.query('SELECT * FROM paises');
         return rows;
@@ -12,7 +12,7 @@ const getPaises = async () => {
 }
 
 // Obtener un pais por ID
-const getPaisById = async (id) => {
+exports.getPaisById = async (id) => {
     try {
         const [rows] = await db.query('SELECT * FROM paises WHERE idPaises = ?', [id]);
         return rows[0];
@@ -23,7 +23,7 @@ const getPaisById = async (id) => {
 }
 
 // Crear un nuevo pais
-const createPais = async (pais) => {
+exports.createPais = async (pais) => {
     const query = 'INSERT INTO paises (urlScraping, scraping) VALUES (?, ?)';
     const values = [pais.urlScraping, pais.scraping];
     try {

@@ -1,7 +1,7 @@
 const db = require('../config/db');
 
 // Obtener todos los wishlists
-const getAllWishlists = async () => {
+exports.getAllWishlists = async () => {
     try {
         const [rows] = await db.query('SELECT * FROM wishlist');
         return rows;
@@ -12,7 +12,7 @@ const getAllWishlists = async () => {
 }
 
 // Obtener los wishlists de un usuario
-const getWishlistsByUserId = async (userId) => {
+exports.getWishlistsByUserId = async (userId) => {
     try {
         const [rows] = await db.query('SELECT * FROM wishlist WHERE idUsuarios = ?', [userId]);
         return rows;
@@ -23,7 +23,7 @@ const getWishlistsByUserId = async (userId) => {
 }
 
 // Obtener las personas que han añadido un país a su wishlist
-const getUsersByCountryId = async (countryId) => {
+exports.getUsersByCountryId = async (countryId) => {
     try {
         const [rows] = await db.query('SELECT * FROM wishlist WHERE idCountry = ?', [countryId]);
         return rows;
@@ -34,7 +34,7 @@ const getUsersByCountryId = async (countryId) => {
 }
 
 // Crear un nuevo wishlist
-const createWishlist = async (wishlist) => {
+exports.createWishlist = async (wishlist) => {
     const query = 'INSERT INTO wishlist (idUsuarios, idCountry) VALUES (?, ?)';
     const values = [wishlist.idUsuarios, wishlist.idCountry];
     try {
@@ -47,7 +47,7 @@ const createWishlist = async (wishlist) => {
 }
 
 // Eliminar un wishlist
-const deleteWishlist = async (id) => {
+exports.deleteWishlist = async (id) => {
     try {
         const [result] = await db.query('DELETE FROM wishlist WHERE idwishlist = ?', [id]);
         return result.affectedRows;

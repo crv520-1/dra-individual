@@ -1,7 +1,7 @@
 const db = require('../config/db');
 
 // Obtener usuario por ID
-const getUsuarioById = async (id) => {
+exports.getUsuarioById = async (id) => {
     try {
         const [rows] = await db.query('SELECT * FROM usuarios WHERE idUsuario = ?', [id]);
         return rows[0];
@@ -12,7 +12,7 @@ const getUsuarioById = async (id) => {
 }
 
 // Obtener un usuario por nombre de usuario
-const getUsuarioByNombre = async (nombreUsuario) => {
+exports.getUsuarioByNombre = async (nombreUsuario) => {
     try {
         const [rows] = await db.query('SELECT * FROM usuarios WHERE nombreUsuario = ?', [nombreUsuario]);
         return rows[0];
@@ -23,7 +23,7 @@ const getUsuarioByNombre = async (nombreUsuario) => {
 }
 
 // Crear un nuevo usuario
-const createUsuario = async (usuario) => {
+exports.createUsuario = async (usuario) => {
     const query = 'INSERT INTO usuarios (nombreUsuario, contrasena, fotoPerfil) VALUES (?, ?, ?)';
     const values = [usuario.nombreUsuario, usuario.contrasena, usuario.fotoPerfil];
     try {
@@ -36,7 +36,7 @@ const createUsuario = async (usuario) => {
 }
 
 // Modificar un usuario existente
-const updateUsuario = async (id, usuario) => {
+exports.updateUsuario = async (id, usuario) => {
     const query = 'UPDATE usuarios SET nombreUsuario = ?, contrasena = ?, fotoPerfil = ? WHERE idUsuario = ?';
     const values = [usuario.nombreUsuario, usuario.contrasena, usuario.fotoPerfil, id];
     try {
@@ -49,7 +49,7 @@ const updateUsuario = async (id, usuario) => {
 }
 
 // Eliminar un usuario
-const deleteUsuario = async (id) => {
+exports.deleteUsuario = async (id) => {
     try {
         const [result] = await db.query('DELETE FROM usuarios WHERE idUsuario = ?', [id]);
         return result.affectedRows;

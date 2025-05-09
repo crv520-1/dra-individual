@@ -1,7 +1,7 @@
 const usuarioModel = require('../models/usuarioModel');
 
 // Obtener un usuario por ID
-const getUsuarioById = async (req, res) => {
+exports.getUsuarioById = async (req, res) => {
     const id = req.params.id;
     try {
         const usuario = await usuarioModel.getUsuarioById(id);
@@ -16,7 +16,7 @@ const getUsuarioById = async (req, res) => {
 }
 
 // Obtener un usuario por nombre de usuario
-const getUsuarioByNombre = async (req, res) => {
+exports.getUsuarioByNombre = async (req, res) => {
     const nombreUsuario = req.params.nombreUsuario;
     try {
         const usuario = await usuarioModel.getUsuarioByNombre(nombreUsuario);
@@ -31,7 +31,7 @@ const getUsuarioByNombre = async (req, res) => {
 }
 
 // Crear un nuevo usuario
-const createUsuario = async (req, res) => {
+exports.createUsuario = async (req, res) => {
     const { nombreUsuario, contrasena, fotoPerfil } = req.body;
     try {
         const nuevoUsuario = { nombreUsuario, contrasena, fotoPerfil };
@@ -44,7 +44,7 @@ const createUsuario = async (req, res) => {
 }
 
 // Modificar un usuario existente
-const updateUsuario = async (req, res) => {
+exports.updateUsuario = async (req, res) => {
     const id = req.params.id;
     const { nombreUsuario, contrasena, fotoPerfil } = req.body;
     try {
@@ -65,7 +65,7 @@ const updateUsuario = async (req, res) => {
 }
 
 // Eliminar un usuario
-const deleteUsuario = async (req, res) => {
+exports.deleteUsuario = async (req, res) => {
     const id = req.params.id;
     try {
         const usuarioExistente = await usuarioModel.getUsuarioById(id);

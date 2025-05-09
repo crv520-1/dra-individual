@@ -1,7 +1,7 @@
 const wishlistModel = require('../models/wishlistModel');
 
 // Obtener todos los wishlists
-const getAllWishlists = async (req, res) => {
+exports.getAllWishlists = async (req, res) => {
     try {
         const wishlists = await wishlistModel.getAllWishlists();
         res.json(wishlists);
@@ -12,7 +12,7 @@ const getAllWishlists = async (req, res) => {
 }
 
 // Obtener los wishlists de un usuario
-const getWishlistsByUserId = async (req, res) => {
+exports.getWishlistsByUserId = async (req, res) => {
     const userId = req.params.userId;
     try {
         const wishlists = await wishlistModel.getWishlistsByUserId(userId);
@@ -24,7 +24,7 @@ const getWishlistsByUserId = async (req, res) => {
 }
 
 // Obtener las personas que han añadido un país a su wishlist
-const getUsersByCountryId = async (req, res) => {
+exports.getUsersByCountryId = async (req, res) => {
     const countryId = req.params.countryId;
     try {
         const users = await wishlistModel.getUsersByCountryId(countryId);
@@ -37,7 +37,7 @@ const getUsersByCountryId = async (req, res) => {
 }
 
 // Crear un nuevo wishlist
-const createWishlist = async (req, res) => {
+exports.createWishlist = async (req, res) => {
     const { idUsuarios, idCountry } = req.body;
     try {
         const nuevoWishlist = { idUsuarios, idCountry };
@@ -50,7 +50,7 @@ const createWishlist = async (req, res) => {
 }
 
 // Eliminar un wishlist
-const deleteWishlist = async (req, res) => {
+exports.deleteWishlist = async (req, res) => {
     const id = req.params.id;
     try {
         const filasAfectadas = await wishlistModel.deleteWishlist(id);

@@ -1,7 +1,7 @@
 const visitadoModel = require('../models/visitadoModel');
 
 // Obtener todos los visitados
-const getVisitados = async (req, res) => {
+exports.getVisitados = async (req, res) => {
     try {
         const visitados = await visitadoModel.getVisitados();
         res.json(visitados);
@@ -12,7 +12,7 @@ const getVisitados = async (req, res) => {
 }
 
 // Obtener los visitados de un usuario
-const getVisitadosByUsuario = async (req, res) => {
+exports.getVisitadosByUsuario = async (req, res) => {
     const idUsuario = req.params.id;
     try {
         const visitados = await visitadoModel.getVisitadosByUsuario(idUsuario);
@@ -24,7 +24,7 @@ const getVisitadosByUsuario = async (req, res) => {
 }
 
 // Obtener personas que han visitado un país
-const getVisitadosByPais = async (req, res) => {
+exports.getVisitadosByPais = async (req, res) => {
     const idPais = req.params.id;
     try {
         const visitados = await visitadoModel.getVisitadosByPais(idPais);
@@ -36,7 +36,7 @@ const getVisitadosByPais = async (req, res) => {
 }
 
 // Crear un nuevo visitado
-const createVisitado = async (req, res) => {
+exports.createVisitado = async (req, res) => {
     const { idUser, idPais } = req.body;
     try {
         const nuevoVisitado = { idUser, idPais };
@@ -49,7 +49,7 @@ const createVisitado = async (req, res) => {
 }
 
 // Eliminar un visitado
-const deleteVisitado = async (req, res) => {
+exports.deleteVisitado = async (req, res) => {
     const id = req.params.id;
     try {
         const filasAfectadas = await visitadoModel.deleteVisitado(id);

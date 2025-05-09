@@ -1,7 +1,7 @@
 const db = require('../config/db');
 
 // Obtener todos los visitados
-const getVisitados = async () => {
+exports.getVisitados = async () => {
     try {
         const [rows] = await db.query('SELECT * FROM visitados');
         return rows;
@@ -12,7 +12,7 @@ const getVisitados = async () => {
 }
 
 // Obtener los visitados de un usuario
-const getVisitadosByUsuario = async (idUsuario) => {
+exports.getVisitadosByUsuario = async (idUsuario) => {
     try {
         const [rows] = await db.query('SELECT * FROM visitados WHERE idUser = ?', [idUsuario]);
         return rows;
@@ -23,7 +23,7 @@ const getVisitadosByUsuario = async (idUsuario) => {
 }
 
 // Obtener personas que han visitado un país
-const getVisitadosByPais = async (idPais) => {
+exports.getVisitadosByPais = async (idPais) => {
     try {
         const [rows] = await db.query('SELECT * FROM visitados WHERE idPais = ?', [idPais]);
         return rows;
@@ -34,7 +34,7 @@ const getVisitadosByPais = async (idPais) => {
 }
 
 // Crear un nuevo visitado
-const createVisitado = async (visitado) => {
+exports.createVisitado = async (visitado) => {
     const query = 'INSERT INTO visitados (idUser, idPais) VALUES (?, ?)';
     const values = [visitado.idUser, visitado.idPais];
     try {
@@ -47,7 +47,7 @@ const createVisitado = async (visitado) => {
 }
 
 // Eliminar un visitado
-const deleteVisitado = async (id) => {
+exports.deleteVisitado = async (id) => {
     try {
         const [result] = await db.query('DELETE FROM visitados WHERE idvisitado = ?', [id]);
         return result.affectedRows;

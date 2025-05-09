@@ -1,7 +1,7 @@
 const paisesModel = require('../models/paisesModel');
 
 // Obtener todos los paises
-const getPaises = async (req, res) => {
+exports.getPaises = async (req, res) => {
     try {
         const paises = await paisesModel.getPaises();
         res.json(paises);
@@ -12,7 +12,7 @@ const getPaises = async (req, res) => {
 }
 
 // Obtener un pais por ID
-const getPaisById = async (req, res) => {
+exports.getPaisById = async (req, res) => {
     const id = req.params.id;
     try {
         const pais = await paisesModel.getPaisById(id);
@@ -27,7 +27,7 @@ const getPaisById = async (req, res) => {
 }
 
 // Crear un nuevo pais
-const createPais = async (req, res) => {
+exports.createPais = async (req, res) => {
     const { urlScraping, scraping } = req.body;
     try {
         const nuevoPais = { urlScraping, scraping };
