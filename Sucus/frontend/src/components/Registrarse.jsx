@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import './IniciarSesion.css';
 import './Registrarse.css';
 
@@ -8,6 +9,8 @@ export const Registrarse = () => {
   const [contrasenaRepetida, setContrasenaRepetida] = useState('');
   const [nombre, setNombre] = useState('');
   const [fotoPerfil, setFotoPerfil] = useState('/fotoPerfil/tintin.png');
+  const navigate = useNavigate();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +30,8 @@ export const Registrarse = () => {
     try {
         const response = await axios.post('http://localhost:3000/api/usuario', newUsuario);
         if (response.data && response.data.id) {
-            alert('Usuario registrado exitosamente');
+            localStorage.setItem('usuario', JSON.stringify(newUsuario.idUsuario));
+            navigate('/Inicio');
         } else {
             alert('Error al registrar el usuario. Inténtalo de nuevo más tarde.');
         }

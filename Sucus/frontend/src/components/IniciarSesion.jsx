@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './IniciarSesion.css';
 
 export const IniciarSesion = () => {
   const [contrasena, setContrasena] = useState('');
   const [nombre, setNombre] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,13 +14,14 @@ export const IniciarSesion = () => {
       alert('Por favor, completa todos los campos.');
       return;
     }
-    axios.get('http://localhost:3000/api/usuario/nombre/${nombre}')
+    axios.get(`http://localhost:3000/api/usuario/nombre/${nombre}`)
       .then((response) => {
-        if (response.data.length > 0) {
-          const usuarioData = response.data[0];
+        console.log(response.data);
+        if (response.data != null) {
+          const usuarioData = response.data;
           if (usuarioData.contrasena === contrasena) {
-            alert('Inicio de sesión exitoso');
-            // Aquí puedes redirigir al usuario a otra página o realizar otras acciones
+            localStorage.setItem('usuario', JSON.stringify(usuarioData.idUsuario));
+            navigate('/Inicio');
           } else {
             alert('Contraseña incorrecta');
           }
