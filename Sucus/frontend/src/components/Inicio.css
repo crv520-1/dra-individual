@@ -1,0 +1,40 @@
+.container-banner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 20%;
+    background-color: #faecd0;
+}
+
+.imagen-logo {
+    width: 10%;
+    height: 65%;
+    object-fit: contain;
+}
+
+.boton-inicio {
+    background-color: #faecd0;
+    color: #7a2a09;
+    border-radius: 15px;
+    border: none;
+    margin-top: 1%;
+    font-size: 3rem;
+    width: 10%;
+    height: 50%;
+}
+
+.boton-perfil {
+    background-color: #faecd0;
+    border: none;
+    margin-top: 0.75%;
+    width: 10%;
+    height: 50%;
+}
+
+.boton-perfil img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    overflow: hidden;
+}
