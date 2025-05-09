@@ -3,7 +3,7 @@ const db = require('../config/db');
 // Obtener usuario por ID
 exports.getUsuarioById = async (id) => {
     try {
-        const [rows] = await db.query('SELECT * FROM usuarios WHERE idUsuario = ?', [id]);
+        const [rows] = await db.query('SELECT * FROM usuario WHERE idUsuario = ?', [id]);
         return rows[0];
     } catch (error) {
         console.error('Error al obtener el usuario por ID:', error);
@@ -14,7 +14,7 @@ exports.getUsuarioById = async (id) => {
 // Obtener un usuario por nombre de usuario
 exports.getUsuarioByNombre = async (nombreUsuario) => {
     try {
-        const [rows] = await db.query('SELECT * FROM usuarios WHERE nombreUsuario = ?', [nombreUsuario]);
+        const [rows] = await db.query('SELECT * FROM usuario WHERE nombreUsuario = ?', [nombreUsuario]);
         return rows[0];
     } catch (error) {
         console.error('Error al obtener el usuario por nombre de usuario:', error);
@@ -24,7 +24,7 @@ exports.getUsuarioByNombre = async (nombreUsuario) => {
 
 // Crear un nuevo usuario
 exports.createUsuario = async (usuario) => {
-    const query = 'INSERT INTO usuarios (nombreUsuario, contrasena, fotoPerfil) VALUES (?, ?, ?)';
+    const query = 'INSERT INTO usuario (nombreUsuario, contrasena, fotoPerfil) VALUES (?, ?, ?)';
     const values = [usuario.nombreUsuario, usuario.contrasena, usuario.fotoPerfil];
     try {
         const [result] = await db.query(query, values);
@@ -37,7 +37,7 @@ exports.createUsuario = async (usuario) => {
 
 // Modificar un usuario existente
 exports.updateUsuario = async (id, usuario) => {
-    const query = 'UPDATE usuarios SET nombreUsuario = ?, contrasena = ?, fotoPerfil = ? WHERE idUsuario = ?';
+    const query = 'UPDATE usuario SET nombreUsuario = ?, contrasena = ?, fotoPerfil = ? WHERE idUsuario = ?';
     const values = [usuario.nombreUsuario, usuario.contrasena, usuario.fotoPerfil, id];
     try {
         const [result] = await db.query(query, values);
@@ -51,7 +51,7 @@ exports.updateUsuario = async (id, usuario) => {
 // Eliminar un usuario
 exports.deleteUsuario = async (id) => {
     try {
-        const [result] = await db.query('DELETE FROM usuarios WHERE idUsuario = ?', [id]);
+        const [result] = await db.query('DELETE FROM usuario WHERE idUsuario = ?', [id]);
         return result.affectedRows;
     } catch (error) {
         console.error('Error al eliminar el usuario:', error);
