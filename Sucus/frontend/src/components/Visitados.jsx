@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import './IniciarSesion.css';
 import './Inicio.css';
 
-export const Inicio = () => {
+export const Visitados = () => {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState(null);
 
@@ -35,8 +35,8 @@ export const Inicio = () => {
         <div className='container-banner'>
             <img src="/logo/logo_sucus.png" alt="Logo Sucus" className='imagen-logo' />
             <div className='container-texto'>
-                <button className='boton-secundario' onClick={() => navigate('/Visitados')}>Visitados</button>
-                <button className='boton-principal' onClick={() => navigate('/Inicio')}>Inicio</button>
+                <button className='boton-principal' onClick={() => navigate('/Visitados')}>Visitados</button>
+                <button className='boton-secundario' onClick={() => navigate('/Inicio')}>Inicio</button>
                 <button className='boton-secundario' onClick={() => navigate('/Deseados')}>Desados</button>
             </div>
             {usuario && (
