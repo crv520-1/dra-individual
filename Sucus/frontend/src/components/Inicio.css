@@ -61,3 +61,62 @@
     object-fit: contain;
     overflow: hidden;
 }
+
+.container-paises {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    width: 100%;
+    height: auto;
+    overflow: auto;
+    margin-bottom: 25px;
+}
+
+.pais-flag {
+  width: 80%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.pais-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #faecd0;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  height: auto;
+  width: auto;
+  margin: 25px;
+}
+
+.pais-card:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s;
+}
+
+.pais-card p {
+    color: #7a2a09;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+::-webkit-scrollbar {
+  width: 25px;
+}
+
+::-webkit-scrollbar-track {
+  background: #faecd0;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4a76a;
+  border-radius: 25px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7a2a09;
+}

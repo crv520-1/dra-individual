@@ -7,6 +7,7 @@ import './Inicio.css';
 export const Inicio = () => {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState(null);
+  const [paises, setPaises] = useState([]);
 
   useEffect(() => {
     const obtenerUsuario = async () => {
@@ -26,6 +27,16 @@ export const Inicio = () => {
                 alert('Error al obtener los datos del usuario.');
             }
         }
+        try {
+            axios.get('https://restcountries.com/v3.1/all').then(response => {
+                setPaises(response.data);
+            }).catch(error => {
+                console.error('Error fetching the country data:', error);
+            });
+        } catch (error) {
+            console.error('Error al obtener los datos de los paises:', error);
+            alert('Error al obtener los datos de los paises.');
+        }
     }
     obtenerUsuario()
   }, [navigate]);
@@ -37,13 +48,21 @@ export const Inicio = () => {
             <div className='container-texto'>
                 <button className='boton-secundario' onClick={() => navigate('/Visitados')}>Visitados</button>
                 <button className='boton-principal' onClick={() => navigate('/Inicio')}>Inicio</button>
-                <button className='boton-secundario' onClick={() => navigate('/Deseados')}>Desados</button>
+                <button className='boton-secundario' onClick={() => navigate('/Deseados')}>Pendientes</button>
             </div>
             {usuario && (
                 <button className='boton-perfil' onClick={() => {navigate('/Perfil')}}>
                     <img src={usuario.fotoPerfil} alt="Perfil" />
                 </button>
             )}
+        </div>
+        <div className='container-paises'>
+            {paises.map((pais) => (
+                <button key={pais.id} className='pais-card'>
+                    <img src={pais.flags.svg} alt={pais.translations.spa} className='pais-flag' />
+                    <p>{pais.capital}, {pais.translations.spa.common}, {pais.region}</p>
+                </button>
+            ))}
         </div>
     </div>
   )

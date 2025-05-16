@@ -37,7 +37,7 @@ export const Visitados = () => {
             <div className='container-texto'>
                 <button className='boton-principal' onClick={() => navigate('/Visitados')}>Visitados</button>
                 <button className='boton-secundario' onClick={() => navigate('/Inicio')}>Inicio</button>
-                <button className='boton-secundario' onClick={() => navigate('/Deseados')}>Desados</button>
+                <button className='boton-secundario' onClick={() => navigate('/Deseados')}>Pendientes</button>
             </div>
             {usuario && (
                 <button className='boton-perfil' onClick={() => {navigate('/Perfil')}}>
