@@ -120,3 +120,43 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #7a2a09;
 }
+
+.container-filtros {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+  gap: 25px;
+}
+
+.boton-continente {
+  border: #faecd0;
+  background-color: #faecd0;
+  color: #7a2a09;
+}
+
+.boton-continente.activo {
+  background-color: #7a2a09;
+  color: #faecd0;
+  border-color: #7a2a09;
+}
+
+.boton-continente:focus {
+  outline: none;
+}
+
+.input-buscador {
+  border-radius: 25px;
+  font-size: 1.25rem;
+  border: 2px solid #7a2a09;
+  color: #7a2a09;
+  background-color: #faecd0;
+}
+
+.input-buscador:focus {
+  outline: none;
+}
+
+.input-buscador::placeholder {
+  color: #7a2a09;
+}

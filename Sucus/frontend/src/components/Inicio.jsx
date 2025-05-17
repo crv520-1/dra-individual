@@ -8,9 +8,12 @@ export const Inicio = () => {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState(null);
   const [paises, setPaises] = useState([]);
+  const [terminoBusqueda, setTerminoBusqueda] = useState('');
+  const [continentesDisponibles, setContinentesDisponibles] = useState([]);
+  const [continentesSeleccionados, setContinentesSeleccionados] = useState(new Set());
 
   useEffect(() => {
-    const obtenerUsuario = async () => {
+    const obtenerDatos = async () => {
         const idUsuario = JSON.parse(localStorage.getItem('usuario'));
         if (!idUsuario) {
             navigate('/');
@@ -28,18 +31,39 @@ export const Inicio = () => {
             }
         }
         try {
-            axios.get('https://restcountries.com/v3.1/all').then(response => {
-                setPaises(response.data);
-            }).catch(error => {
-                console.error('Error fetching the country data:', error);
-            });
+            const response = await axios.get('https://restcountries.com/v3.1/all');
+            const paisesData = response.data;
+            setPaises(paisesData);
+
+            const regionesUnicas = [...new Set(paisesData.map(pais => pais.region).filter(region => region))];
+            setContinentesDisponibles(regionesUnicas.sort());
+            setContinentesSeleccionados(new Set(regionesUnicas));
+
         } catch (error) {
-            console.error('Error al obtener los datos de los paises:', error);
+            console.error('Error fetching the country data:', error);
             alert('Error al obtener los datos de los paises.');
         }
     }
-    obtenerUsuario()
+    obtenerDatos();
   }, [navigate]);
+
+  const handleToggleContinente = (continente) => {
+    setContinentesSeleccionados(prevSeleccionados => {
+      const nuevosSeleccionados = new Set(prevSeleccionados);
+      if (nuevosSeleccionados.has(continente)) {
+        nuevosSeleccionados.delete(continente);
+      } else {
+        nuevosSeleccionados.add(continente);
+      }
+      return nuevosSeleccionados;
+    });
+  };
+
+  const paisesFiltrados = paises.filter(pais => {
+    const coincideBusqueda = pais.translations.spa.common.toLowerCase().includes(terminoBusqueda.toLowerCase());
+    const coincideContinente = continentesSeleccionados.size === 0 || continentesSeleccionados.has(pais.region);
+    return coincideBusqueda && coincideContinente;
+  });
 
   return (
     <div className='login-container'>
@@ -56,11 +80,19 @@ export const Inicio = () => {
                 </button>
             )}
         </div>
+        <div className='container-filtros'>
+            {continentesDisponibles.map(continente => (
+                <button key={continente} onClick={() => handleToggleContinente(continente)} className={`boton-continente ${continentesSeleccionados.has(continente) ? 'activo' : ''}`}>
+                    {continente}
+                </button>
+            ))}
+            <input type="text" placeholder="Buscar país..." className="input-buscador" value={terminoBusqueda} onChange={(e) => setTerminoBusqueda(e.target.value)}/>
+        </div>
         <div className='container-paises'>
-            {paises.map((pais) => (
-                <button key={pais.id} className='pais-card' onClick={() => navigate('/Detalles', { state: { pais } })}>
+            {paisesFiltrados.map((pais) => (
+                <button key={pais.cca3} className='pais-card' onClick={() => navigate('/Detalles', { state: { pais } })}>
                     <img src={pais.flags.svg} alt={pais.translations.spa.common} className='pais-flag' />
-                    <p>{pais.capital}, {pais.translations.spa.common}, {pais.region}</p>
+                    <p>{pais.capital && pais.capital[0]}, {pais.translations.spa.common}, {pais.region}</p>
                 </button>
             ))}
         </div>
