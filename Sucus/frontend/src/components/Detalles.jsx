@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { MapPin, MapPinCheck, MapPinMinus, MapPinPlus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import './Detalles.css';
@@ -63,17 +64,25 @@ export const Detalles = () => {
             <div className='detalles-pais'>
                 <img src={pais.flags.svg} alt={pais.translations.spa.common} className='pais-flag-detalles' />
                 <div>
-                    <h2>{pais.translations.spa.common}</h2>
-                    <p>Capital: {pais.capital}</p>
-                    <p>Región: {pais.region}</p>
-                    <p>Subregión: {pais.subregion}</p>
-                    {pais.independent == true ? (
-                        <p>Independiente: Sí</p>
-                    ) : (
-                        <p>Independiente: No</p>
-                    )}
+                    <div className='container-datos-generales'>
+                        <MapPin className='iconos'/>
+                        <MapPinCheck className='iconos'/>
+                        <h2 className="titulo-pais">{pais.translations.spa.common}</h2>
+                        <MapPinPlus className='iconos'/>
+                        <MapPinMinus className='iconos'/>
+                    </div>
+                    <div className='container-datos'>
+                        <p>Capital: {pais.capital}</p>
+                        {pais.independent == true ? (
+                            <p>Independiente: Sí</p>
+                        ) : (
+                            <p>Independiente: No</p>
+                        )}
+                        <p>Región: {pais.region}</p>
+                        <p>Subregión: {pais.subregion}</p>
+                    </div>
                 </div>
-                <img src={pais.coatOfArms.svg} alt={pais.translations.spa.common} className='pais-coat-of-arms-detalles' />
+                <img src={pais.coatOfArms.svg} className='pais-coat-of-arms-detalles' />
             </div>
         ) : (
             <p>Cargando información del país...</p>

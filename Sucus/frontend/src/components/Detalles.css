@@ -8,20 +8,6 @@
     margin-bottom: 25px;
 }
 
-.pais-flag-detalles {
-    width: 15%;
-    height: auto;
-    object-fit: contain;
-    margin-left: 100px;
-}
-
-.pais-coat-of-arms-detalles {
-    width: 12%;
-    height: auto;
-    object-fit: contain;
-    margin-right: 100px;
-}
-
 .detalles-pais h2 {
     font-size: 3rem;
     color: #7a2a09;
@@ -31,4 +17,49 @@
 .detalles-pais p {
     font-size: 1.5rem;
     color: #7a2a09;
+}
+
+.pais-flag-detalles {
+    width: 15%;
+    height: auto;
+    object-fit: contain;
+    margin-left: 4%;
+}
+
+.pais-coat-of-arms-detalles {
+    width: 12%;
+    height: auto;
+    object-fit: contain;
+    margin-right: 4%;
+}
+
+.container-datos-generales {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    margin-bottom: 25px;
+}
+
+.iconos {
+    color: #7a2a09;
+    width: 8%;
+    height: auto;
+    cursor: pointer;
+}
+
+.container-datos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 25px;
+}
+
+.titulo-pais {
+  text-align: center;
+  width: 100%;
 }
