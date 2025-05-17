@@ -1,15 +1,26 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import './Detalles.css';
 import './IniciarSesion.css';
 import './Inicio.css';
 
-export const Inicio = () => {
+export const Detalles = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [usuario, setUsuario] = useState(null);
-  const [paises, setPaises] = useState([]);
+  const [pais, setPais] = useState(null);
 
   useEffect(() => {
+    // Obtener el país de location.state
+    if (location.state && location.state.pais) {
+      setPais(location.state.pais);
+    } else {
+      // Manejar el caso donde no se ha pasado un país
+      alert('No se ha seleccionado ningún país');
+      navigate('/Inicio');
+    }
+
     const obtenerUsuario = async () => {
         const idUsuario = JSON.parse(localStorage.getItem('usuario'));
         if (!idUsuario) {
@@ -27,20 +38,11 @@ export const Inicio = () => {
                 alert('Error al obtener los datos del usuario.');
             }
         }
-        try {
-            axios.get('https://restcountries.com/v3.1/all').then(response => {
-                setPaises(response.data);
-            }).catch(error => {
-                console.error('Error fetching the country data:', error);
-            });
-        } catch (error) {
-            console.error('Error al obtener los datos de los paises:', error);
-            alert('Error al obtener los datos de los paises.');
-        }
     }
-    obtenerUsuario()
-  }, [navigate]);
+    obtenerUsuario();
+  }, [navigate, location]);
 
+  // Verifica si pais existe antes de mostrar sus datos
   return (
     <div className='login-container'>
         <div className='container-banner'>
@@ -56,14 +58,26 @@ export const Inicio = () => {
                 </button>
             )}
         </div>
-        <div className='container-paises'>
-            {paises.map((pais) => (
-                <button key={pais.id} className='pais-card' onClick={() => navigate('/Detalles', { state: { pais } })}>
-                    <img src={pais.flags.svg} alt={pais.translations.spa.common} className='pais-flag' />
-                    <p>{pais.capital}, {pais.translations.spa.common}, {pais.region}</p>
-                </button>
-            ))}
-        </div>
+        
+        {pais ? (
+            <div className='detalles-pais'>
+                <img src={pais.flags.svg} alt={pais.translations.spa.common} className='pais-flag-detalles' />
+                <div>
+                    <h2>{pais.translations.spa.common}</h2>
+                    <p>Capital: {pais.capital}</p>
+                    <p>Región: {pais.region}</p>
+                    <p>Subregión: {pais.subregion}</p>
+                    {pais.independent == true ? (
+                        <p>Independiente: Sí</p>
+                    ) : (
+                        <p>Independiente: No</p>
+                    )}
+                </div>
+                <img src={pais.coatOfArms.svg} alt={pais.translations.spa.common} className='pais-coat-of-arms-detalles' />
+            </div>
+        ) : (
+            <p>Cargando información del país...</p>
+        )}
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import { Deseados } from './components/Deseados'
+import { Detalles } from './components/Detalles'
 import { IniciarSesion } from './components/IniciarSesion'
 import { Inicio } from './components/Inicio'
 import { Perfil } from './components/Perfil'
@@ -16,6 +17,7 @@ function App() {
       <Route path="/Visitados" element={<Visitados />} />
       <Route path="/Deseados" element={<Deseados />} />
       <Route path="/Perfil" element={<Perfil />} />
+      <Route path="/Detalles" element={<Detalles />} />
     </Routes>
   )
 }
