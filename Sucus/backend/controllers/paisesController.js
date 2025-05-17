@@ -26,6 +26,21 @@ exports.getPaisById = async (req, res) => {
     }
 }
 
+// Obtener un pais por nombre
+exports.getPaisByName = async (req, res) => {
+    const nombre = req.params.nombre;
+    try {
+        const pais = await paisesModel.getPaisByName(nombre);
+        if (!pais) {
+            return res.status(404).json({ message: 'Pais no encontrado' });
+        }
+        res.json(pais);
+    } catch (error) {
+        console.error('Error al obtener el pais por nombre:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+}
+
 // Crear un nuevo pais
 exports.createPais = async (req, res) => {
     const { urlScraping, scraping } = req.body;
