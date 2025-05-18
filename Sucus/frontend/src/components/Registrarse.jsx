@@ -30,7 +30,7 @@ export const Registrarse = () => {
     try {
         const response = await axios.post('http://localhost:3000/api/usuario', newUsuario);
         if (response.data && response.data.id) {
-            localStorage.setItem('usuario', JSON.stringify(newUsuario.idUsuario));
+            localStorage.setItem('usuario', JSON.stringify(response.data.id));
             navigate('/Inicio');
         } else {
             alert('Error al registrar el usuario. Inténtalo de nuevo más tarde.');
