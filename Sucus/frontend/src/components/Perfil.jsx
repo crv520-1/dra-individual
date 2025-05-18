@@ -1,9 +1,11 @@
 import axios from 'axios';
+import { LogOut, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import './IniciarSesion.css';
 import './Inicio.css';
 import './Perfil.css';
+import './Registrarse.css';
 
 export const Perfil = () => {
   const navigate = useNavigate();
@@ -83,6 +85,24 @@ export const Perfil = () => {
     navigate('/');
   }
 
+  const handleEliminarCuenta = async (e) => {
+    e.preventDefault();
+    if (window.confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.')) {
+        try {
+            const response = await axios.delete(`http://localhost:3000/api/usuario/${usuario.idUsuario}`);
+            if (response.data) {
+                localStorage.removeItem('usuario');
+                navigate('/');
+            } else {
+                alert('Error al intentar eliminar la cuenta.');
+            }
+        } catch (error) {
+            console.error('Error al eliminar la cuenta:', error);
+            alert('Error al intentar eliminar la cuenta. Inténtalo de nuevo más tarde.');
+        }
+    }
+  }
+
   return (
     <div className='login-container'>
         <div className='container-banner'>
@@ -115,11 +135,14 @@ export const Perfil = () => {
                     <input type="password" placeholder="Contraseña" className="password-field-register" value={contrasena} onChange={(e) => setContrasena(e.target.value)} />
                     <input type="password" placeholder="Repite la contraseña" className="password-field-register" value={contrasenaRepetida} onChange={(e) => setContrasenaRepetida(e.target.value)} />
                 </div>
+                <div className='container-cerrar'>
+                    <LogOut className='iconos-cerrar' onClick={handleCerrarSesion}/>
+                    <Trash2 className='iconos-cerrar' onClick={handleEliminarCuenta}/>
+                </div>
             </div>
             <div className='container-botones-perfil'>
                 <button type="submit" className="boton-cancelar" onClick={handleCancelar}>Cancelar</button>
                 <button type="submit" className="boton-guardar" onClick={handleGuardar}>Guardar</button>
-                <button type="submit" className="boton-cancelar" onClick={handleCerrarSesion}>Cerrar Sesión</button>
             </div>
         </form>
     </div>

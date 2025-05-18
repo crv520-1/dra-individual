@@ -36,3 +36,27 @@
 .boton-guardar:hover {
   border: 2px solid #7a2a09;
 }
+
+.container-cerrar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.boton-cerrar {
+  background-color: #faecd0;
+  color: #7a2a09;
+  border-radius: 15px;
+  border: none;
+  height: 100%;
+  margin: 25px;
+}
+
+.iconos-cerrar {
+  color: #7a2a09;
+  width: 250%;
+  height: auto;
+  cursor: pointer;
+  margin: 100%;
+}
