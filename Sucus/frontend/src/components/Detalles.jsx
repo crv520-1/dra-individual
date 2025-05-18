@@ -44,7 +44,7 @@ export const Detalles = () => {
 
   useEffect(() => {
     const obtenerDatosPaisYScraping = async () => {
-        if (pais) { // Ensure pais is not null
+        if (pais) {
             try {
                 let nombrePais = pais.translations.spa.common;
                 const responsePais = await axios.get(`http://localhost:3000/api/paises/nombre/${nombrePais}`);
@@ -75,7 +75,7 @@ export const Detalles = () => {
     };
 
     obtenerDatosPaisYScraping();
-  }, [pais]); // Add pais as a dependency
+  }, [pais]);
 
   return (
     <div className='login-container'>
@@ -122,7 +122,7 @@ export const Detalles = () => {
         )}
 
         {informacion ? (
-            <div className='container-informacion'>
+            <div className='container-informacion' style={{ color: 'black' }}>
                 <h2>Información del país</h2>
                 <p>{informacion}</p>
             </div>

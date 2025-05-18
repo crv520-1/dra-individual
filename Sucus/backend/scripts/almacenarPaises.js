@@ -33,7 +33,7 @@ async function almacenarPaises() {
 }
 
 async function getURLScraping(pais) {
-    if (pais.translations.spa.common === "Alandia") {
+    if (pais.translations.spa.common === "Alandia" || pais.translations.spa.common === "Palestina") {
         return "https://es.wikipedia.org/wiki/" + pais.translations.spa.official;
     }
     return "https://es.wikipedia.org/wiki/" + pais.translations.spa.common;
