@@ -10,5 +10,7 @@ router.get('/:id', paisesController.getPaisById);
 router.get('/nombre/:nombre', paisesController.getPaisByName);
 // Crear un nuevo pais
 router.post('/', paisesController.createPais);
+// Eliminar todos los paises
+router.delete('/', paisesController.deleteAllPaises);
 
 module.exports = router;

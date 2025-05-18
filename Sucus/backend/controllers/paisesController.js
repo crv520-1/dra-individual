@@ -53,3 +53,14 @@ exports.createPais = async (req, res) => {
         res.status(500).json({ message: 'Error interno del servidor' });
     }
 }
+
+// Eliminar todos los paises
+exports.deleteAllPaises = async (req, res) => {
+    try {
+        await paisesModel.deleteAllPaises();
+        res.status(204).send();
+    } catch (error) {
+        console.error('Error al eliminar todos los paises:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+}

@@ -45,3 +45,13 @@ exports.createPais = async (pais) => {
         throw error;
     }
 }
+
+// Eliminar todos los paises
+exports.deleteAllPaises = async () => {
+    try {
+        await db.query('DELETE FROM paises');
+    } catch (error) {
+        console.error('Error al eliminar todos los paises:', error);
+        throw error;
+    }
+}

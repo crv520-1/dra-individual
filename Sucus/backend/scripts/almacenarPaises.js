@@ -18,6 +18,9 @@ async function almacenarPaises() {
             };
         }));
 
+        // Eliminar todos los registros existentes en la tabla paises
+        await db.deleteAllPaises();
+
         for (const pais of paises) {
             await db.createPais(pais);
         }
@@ -31,7 +34,7 @@ async function almacenarPaises() {
 
 async function getURLScraping(pais) {
     if (pais.translations.spa.common === "Alandia") {
-        return "https://es.wikipedia.org/wiki/" + pais.name.common;
+        return "https://es.wikipedia.org/wiki/" + pais.translations.spa.official;
     }
     return "https://es.wikipedia.org/wiki/" + pais.translations.spa.common;
 }
