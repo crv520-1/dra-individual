@@ -1,0 +1,38 @@
+.container-botones-perfil {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  margin-top: 8%;
+}
+
+.boton-cancelar {
+  background-color: #7a2a09;
+  color: #faecd0;
+  border-radius: 15px;
+  border: none;
+  font-size: 2rem;
+  width: 25%;
+  height: 100%;
+}
+
+.boton-cancelar:focus {
+  outline: none;
+}
+
+.boton-guardar {
+  background-color: #faecd0;
+  color: #7a2a09;
+  border-radius: 15px;
+  border: 2px solid #7a2a09;
+  font-size: 2rem;
+  width: 25%;
+  height: 100%;
+}
+
+.boton-guardar:focus {
+  outline: none;
+}
+
+.boton-guardar:hover {
+  border: 2px solid #7a2a09;
+}
