@@ -5,11 +5,11 @@ const wishlistController = require('../controllers/wishlistController');
 // Obtener todos los wishlist
 router.get('/', wishlistController.getAllWishlists);
 // Obtener los wishlist de un usuario
-router.get('/user/:userId', wishlistController.getWishlistsByUserId);
+router.get('/user/:idUsuarios', wishlistController.getWishlistsByUserId);
 // Obtener las personas que han añadido un país a su wishlist
-router.get('/country/:countryId', wishlistController.getUsersByCountryId);
+router.get('/country/:idCountry', wishlistController.getUsersByCountryId);
 // Comprobar si un usuario ha añadido un país a su wishlist
-router.get('/check/:userId/:countryId', wishlistController.checkWishlist);
+router.get('/check/:idUsuarios/:idCountry', wishlistController.checkWishlist);
 // Crear un nuevo wishlist
 router.post('/', wishlistController.createWishlist);
 // Eliminar un wishlist
