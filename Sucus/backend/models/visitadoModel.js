@@ -33,6 +33,17 @@ exports.getVisitadosByPais = async (idPais) => {
     }
 }
 
+// Comprobar si un usuario ha visitado un país
+exports.checkVisitado = async (idUser, idPais) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM visitados WHERE idUser = ? AND idPais = ?', [idUser, idPais]);
+        return rows.length > 0;
+    } catch (error) {
+        console.error('Error al comprobar si el usuario ha visitado el país:', error);
+        throw error;
+    }
+}
+
 // Crear un nuevo visitado
 exports.createVisitado = async (visitado) => {
     const query = 'INSERT INTO visitados (idUser, idPais) VALUES (?, ?)';

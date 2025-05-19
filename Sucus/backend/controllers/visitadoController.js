@@ -35,6 +35,22 @@ exports.getVisitadosByPais = async (req, res) => {
     }
 }
 
+// Comprobar si un usuario ha visitado un país
+exports.checkVisitado = async (req, res) => {
+    const { idUser, idPais } = req.body;
+    try {
+        const visitado = await visitadoModel.checkVisitado(idUser, idPais);
+        if (visitado) {
+            return res.status(200).json({ message: 'El usuario ha visitado el país' });
+        } else {
+            return res.status(404).json({ message: 'El usuario no ha visitado el país' });
+        }
+    } catch (error) {
+        console.error('Error al comprobar si el usuario ha visitado el país:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+}
+
 // Crear un nuevo visitado
 exports.createVisitado = async (req, res) => {
     const { idUser, idPais } = req.body;
