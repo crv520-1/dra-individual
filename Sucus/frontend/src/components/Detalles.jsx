@@ -122,7 +122,7 @@ export const Detalles = () => {
         )}
 
         {informacion ? (
-            <div className='container-informacion' style={{ color: 'black' }}>
+            <div className='container-informacion'>
                 <h2>Información del país</h2>
                 <p>{informacion}</p>
             </div>
