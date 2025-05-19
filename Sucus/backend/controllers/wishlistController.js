@@ -13,9 +13,9 @@ exports.getAllWishlists = async (req, res) => {
 
 // Obtener los wishlists de un usuario
 exports.getWishlistsByUserId = async (req, res) => {
-    const userId = req.params.userId;
+    const idUsuarios = req.params.idUsuarios;
     try {
-        const wishlists = await wishlistModel.getWishlistsByUserId(userId);
+        const wishlists = await wishlistModel.getWishlistsByUserId(idUsuarios);
         res.json(wishlists);
     } catch (error) {
         console.error('Error al obtener los wishlists por ID de usuario:', error);
