@@ -9,7 +9,7 @@ router.get('/usuario/:id', visitadoController.getVisitadosByUsuario);
 // Obtener personas que han visitado un país
 router.get('/pais/:id', visitadoController.getVisitadosByPais);
 // Comprobar si un usuario ha visitado un país
-router.post('/check', visitadoController.checkVisitado);
+router.get('/check/:idUser/:idPais', visitadoController.checkVisitado);
 // Crear un nuevo visitado
 router.post('/', visitadoController.createVisitado);
 // Eliminar un visitado
