@@ -127,7 +127,7 @@ export const Detalles = () => {
                 <p>{informacion}</p>
             </div>
         ) : (
-            <p>Cargando información del país...</p>
+            <p className='texto-cargando'>Cargando información del país...</p>
         )}
     </div>
   )
