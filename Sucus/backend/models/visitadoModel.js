@@ -3,7 +3,7 @@ const db = require('../config/db');
 // Obtener todos los visitados
 exports.getVisitados = async () => {
     try {
-        const [rows] = await db.query('SELECT * FROM visitados');
+        const [rows] = await db.query('SELECT * FROM visitado');
         return rows;
     } catch (error) {
         console.error('Error al obtener los visitados:', error);
@@ -14,7 +14,7 @@ exports.getVisitados = async () => {
 // Obtener los visitados de un usuario
 exports.getVisitadosByUsuario = async (idUsuario) => {
     try {
-        const [rows] = await db.query('SELECT * FROM visitados WHERE idUser = ?', [idUsuario]);
+        const [rows] = await db.query('SELECT * FROM visitado WHERE idUser = ?', [idUsuario]);
         return rows;
     } catch (error) {
         console.error('Error al obtener los visitados del usuario:', error);
@@ -25,7 +25,7 @@ exports.getVisitadosByUsuario = async (idUsuario) => {
 // Obtener personas que han visitado un país
 exports.getVisitadosByPais = async (idPais) => {
     try {
-        const [rows] = await db.query('SELECT * FROM visitados WHERE idPais = ?', [idPais]);
+        const [rows] = await db.query('SELECT * FROM visitado WHERE idPais = ?', [idPais]);
         return rows;
     } catch (error) {
         console.error('Error al obtener los visitados del país:', error);
@@ -36,7 +36,7 @@ exports.getVisitadosByPais = async (idPais) => {
 // Comprobar si un usuario ha visitado un país
 exports.checkVisitado = async (idUser, idPais) => {
     try {
-        const [rows] = await db.query('SELECT * FROM visitados WHERE idUser = ? AND idPais = ?', [idUser, idPais]);
+        const [rows] = await db.query('SELECT * FROM visitado WHERE idUser = ? AND idPais = ?', [idUser, idPais]);
         return rows.length > 0;
     } catch (error) {
         console.error('Error al comprobar si el usuario ha visitado el país:', error);
@@ -46,7 +46,7 @@ exports.checkVisitado = async (idUser, idPais) => {
 
 // Crear un nuevo visitado
 exports.createVisitado = async (visitado) => {
-    const query = 'INSERT INTO visitados (idUser, idPais) VALUES (?, ?)';
+    const query = 'INSERT INTO visitado (idUser, idPais) VALUES (?, ?)';
     const values = [visitado.idUser, visitado.idPais];
     try {
         const [result] = await db.query(query, values);
@@ -60,7 +60,7 @@ exports.createVisitado = async (visitado) => {
 // Eliminar un visitado
 exports.deleteVisitado = async (id) => {
     try {
-        const [result] = await db.query('DELETE FROM visitados WHERE idvisitado = ?', [id]);
+        const [result] = await db.query('DELETE FROM visitado WHERE idvisitado = ?', [id]);
         return result.affectedRows;
     } catch (error) {
         console.error('Error al eliminar el visitado:', error);
