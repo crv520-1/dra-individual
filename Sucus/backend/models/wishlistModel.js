@@ -35,13 +35,14 @@ exports.getUsersByCountryId = async (countryId) => {
 
 // Comprobar si un usuario ha añadido un país a su wishlist
 exports.checkWishlist = async (userId, countryId) => {
-    try {
-        const [rows] = await db.query('SELECT * FROM wishlist WHERE idUsuarios = ? AND idCountry = ?', [userId, countryId]);
-        return rows.length > 0;
-    } catch (error) {
-        console.error('Error al comprobar si el usuario ha añadido el país a su wishlist:', error);
-        throw error;
-    }
+    const idPais = req.params.id;
+        try {
+            const pendientes = await visitadoModel.checkWishlist(idPais);
+            res.json(pendientes);
+        } catch (error) {
+            console.error('Error al obtener los pendientes del país:', error);
+            res.status(500).json({ message: 'Error interno del servidor' });
+        }
 }
 
 // Crear un nuevo wishlist
