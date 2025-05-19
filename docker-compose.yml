@@ -1,0 +1,33 @@
+services:
+  frontend:
+    build:
+      context: ./Sucus/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000" # Exposes frontend on host port 5000
+    container_name: sucus-frontend
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./Sucus/backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" # Exposes backend on host port 3000
+    container_name: sucus-backend
+    restart: unless-stopped
+    environment:
+      # Replace these with your actual database connection details
+      # These values will be available as environment variables in the backend container
+      - DB_HOST=host.docker.internal # e.g., host.docker.internal if DB is on host, or a DB service name
+      - DB_USER=root
+      - DB_PASSWORD=CaRLoS14
+      - DB_NAME=dra-individual
+      - DB_PORT=3306
+      # PUPPETEER_EXECUTABLE_PATH is not needed if Puppeteer uses its bundled Chromium.
+      # The Dockerfile is set up for Puppeteer to download and use its own Chromium.
+      # The args ['--no-sandbox', '--disable-setuid-sandbox'] for puppeteer.launch()
+      # are already in your Sucus/backend/scripts/scraping.js file, which is good for Docker.
+    # If you were to run your database as another Docker service, you might add:
+    # depends_on:
+    #   - your_database_service_name
