@@ -85,11 +85,11 @@ export const Detalles = () => {
     const verificarEstado = async () => {
         if (usuario && paisDB) {
             try {
-                const responseVisitado = await axios.get(`http://localhost:3000/api/visitado/${usuario.idUsuario}/${paisDB.idPaises}`);
+                const responseVisitado = await axios.get(`http://localhost:3000/api/visitado/check/${usuario.idUsuario}/${paisDB.idPaises}`);
                 if (responseVisitado.data != null) {
                     setVisitado(responseVisitado.data);
                 } else {
-                    alert('Error al obtener el estado de visitado porque da null el response.data.');
+                    setVisitado(false);
                 }
             } catch (error) {
                 console.error('Error al obtener el estado de visitado:', error);
@@ -100,7 +100,7 @@ export const Detalles = () => {
                 if (responsePendiente.data != null) {
                     setPendiente(responsePendiente.data);
                 } else {
-                    alert('Error al obtener el estado de pendiente porque da null el response.data.');
+                    setPendiente(false);
                 }
             } catch (error) {
                 console.error('Error al obtener el estado de pendiente:', error);
@@ -114,7 +114,7 @@ export const Detalles = () => {
   const handleVisitado = async () => {
     if (visitado) {
         try {
-            const response = await axios.delete(`http://localhost:3000/api/visitado/${usuario.idUsuario}/${paisDB.idPaises}`);
+            const response = await axios.delete(`http://localhost:3000/api/visitado/${visitado.idvisitado}`);
             if (response.status === 200) {
                 setVisitado(false);
             } else {
@@ -130,7 +130,22 @@ export const Detalles = () => {
                 idPais: paisDB.idPaises
             });
             if (response.status === 201) {
-                setVisitado(true);
+                if (response.data && response.data.idvisitado) {
+                    setVisitado(response.data);
+                } else {
+                    try {
+                        const checkResponse = await axios.get(`http://localhost:3000/api/visitado/check/${usuario.idUsuario}/${paisDB.idPaises}`);
+                        if (checkResponse.data && typeof checkResponse.data === 'object' && checkResponse.data.idvisitado) {
+                            setVisitado(checkResponse.data);
+                        } else {
+                            setVisitado(true);
+                        }
+                    } catch (fetchError) {
+                        console.error('Error al re-verificar estado de visitado tras añadir:', fetchError);
+                        setVisitado(true);
+                        alert('Error al verificar el estado tras añadir el país a visitados.');
+                    }
+                }
             } else {
                 alert('Error al añadir el país a la lista de visitados.');
             }
@@ -143,7 +158,7 @@ export const Detalles = () => {
   const handlePendiente = async () => {
     if (pendiente) {
         try {
-            const response = await axios.delete(`http://localhost:3000/api/wishlist/${usuario.idUsuario}/${paisDB.idPaises}`);
+            const response = await axios.delete(`http://localhost:3000/api/wishlist/${pendiente.idwishlist}`);
             if (response.status === 200) {
                 setPendiente(false);
             } else {
@@ -159,7 +174,22 @@ export const Detalles = () => {
                 idCountry: paisDB.idPaises
             });
             if (response.status === 201) {
-                setPendiente(true);
+                if (response.data && response.data.idwishlist) {
+                    setPendiente(response.data);
+                } else {
+                    try {
+                        const checkResponse = await axios.get(`http://localhost:3000/api/wishlist/check/${usuario.idUsuario}/${paisDB.idPaises}`);
+                        if (checkResponse.data && typeof checkResponse.data === 'object' && checkResponse.data.idwishlist) {
+                            setPendiente(checkResponse.data);
+                        } else {
+                            setPendiente(true);
+                        }
+                    } catch (fetchError) {
+                        console.error('Error al re-verificar estado de visitado tras añadir:', fetchError);
+                        setPendiente(true);
+                        alert('Error al verificar el estado tras añadir el país a visitados.');
+                    }
+                }
             } else {
                 alert('Error al añadir el país a la lista de pendientes.');
             }
@@ -175,7 +205,7 @@ export const Detalles = () => {
             <img src="/logo/logo_sucus.png" alt="Logo Sucus" className='imagen-logo' />
             <div className='container-texto'>
                 <button className='boton-secundario' onClick={() => navigate('/Visitados')}>Visitados</button>
-                <button className='boton-principal' onClick={() => navigate('/Inicio')}>Inicio</button>
+                <button className='boton-secundario' onClick={() => navigate('/Inicio')}>Inicio</button>
                 <button className='boton-secundario' onClick={() => navigate('/Deseados')}>Pendientes</button>
             </div>
             {usuario && (
