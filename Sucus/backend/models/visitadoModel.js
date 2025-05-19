@@ -37,7 +37,7 @@ exports.getVisitadosByPais = async (idPais) => {
 exports.checkVisitado = async (idUser, idPais) => {
     try {
         const [rows] = await db.query('SELECT * FROM visitado WHERE idUser = ? AND idPais = ?', [idUser, idPais]);
-        return rows.length > 0;
+        return rows.length > 0 ? rows[0] : null;
     } catch (error) {
         console.error('Error al comprobar si el usuario ha visitado el país:', error);
         throw error;

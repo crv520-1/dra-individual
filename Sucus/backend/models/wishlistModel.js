@@ -37,7 +37,7 @@ exports.getUsersByCountryId = async (countryId) => {
 exports.checkWishlist = async (idUsuarios, idCountry) => {
     try {
         const [rows] = await db.query('SELECT * FROM wishlist WHERE idUsuarios = ? AND idCountry = ?', [idUsuarios, idCountry]);
-        return rows.length > 0;
+        return rows.length > 0 ? rows[0] : null;
     } catch (error) {
         console.error('Error al comprobar el wishlist:', error);
         throw error;
