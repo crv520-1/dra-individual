@@ -40,7 +40,7 @@ exports.getUsersByCountryId = async (req, res) => {
 exports.checkWishlist = async (req, res) => {
     const idPais = req.params.id;
     try {
-        const pendientes = await visitadoModel.checkWishlist(idPais);
+        const pendientes = await wishlistModel.checkWishlist(idPais);
         res.json(pendientes);
     } catch (error) {
         console.error('Error al obtener los pendientes del país:', error);
