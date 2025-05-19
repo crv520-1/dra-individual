@@ -14,7 +14,8 @@ async function almacenarPaises() {
             const url = await getURLScraping(apiPais);
             return {
                 urlScraping: url,
-                nombrePais: apiPais.translations.spa.common
+                nombrePais: apiPais.translations.spa.common,
+                cca2: apiPais.cca2
             };
         }));
 
