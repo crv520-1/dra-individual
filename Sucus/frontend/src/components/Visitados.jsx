@@ -7,6 +7,7 @@ import './Inicio.css';
 export const Visitados = () => {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState(null);
+  const [paisesVisitados, setPaisesVisitados] = useState([]);
 
   useEffect(() => {
     const obtenerUsuario = async () => {
@@ -30,6 +31,50 @@ export const Visitados = () => {
     obtenerUsuario()
   }, [navigate]);
 
+  useEffect(() => {
+    const obtenerPaisesVisitados = async () => {
+        if (usuario) {
+            try {
+                const response = await axios.get(`http://localhost:3000/api/visitado/usuario/${usuario.idUsuario}`);
+                if (response.data != null) {
+                    const paisPromises = response.data.map(async (pais) => {
+                        const responsePais = await axios.get(`http://localhost:3000/api/paises/${pais.idPais}`);
+                        return responsePais.data.cca2;
+                    });
+
+                    const cca2Array = await Promise.all(paisPromises);
+                    const cca2String = cca2Array.join(',');
+
+                    if (cca2String) {
+                        try {
+                            console.log('cca2String:', cca2String);
+                            console.log(`https://restcountries.com/v3.1/alpha?codes=${cca2String}`);
+                            const responsePaises = await axios.get(`https://restcountries.com/v3.1/alpha?codes=${cca2String}`);
+                            if (responsePaises.data != null) {
+                                setPaisesVisitados(responsePaises.data);
+                            } else {
+                                alert('Error al obtener los paises visitados porque da null el responsePaises.data.');
+                            }
+                        } catch (error) {
+                            console.error('Error al obtener los paises visitados:', error);
+                            alert('Error al obtener los paises visitados por alphaCodes.');
+                        }
+                    } else {
+                        setPaisesVisitados([]);
+                    }
+                } else {
+                    setPaisesVisitados([]);
+                    alert('Error al obtener los paises visitados porque da null el response.data.');
+                }
+            } catch (error) {
+                console.error('Error al obtener los paises visitados:', error);
+                alert('Error al obtener los paises visitados.');
+            }
+        }
+    }
+    obtenerPaisesVisitados();
+  }, [usuario]);
+
   return (
     <div className='login-container'>
         <div className='container-banner'>
@@ -44,6 +89,14 @@ export const Visitados = () => {
                     <img src={usuario.fotoPerfil} alt="Perfil" />
                 </button>
             )}
+        </div>
+        <div className='container-paises'>
+            {paisesVisitados.map((pais) => (
+                <button key={pais.cca2} className='pais-card' onClick={() => navigate('/Detalles', { state: { pais } })}>
+                    <img src={pais.flags.svg} alt={pais.translations.spa.common} className='pais-flag' />
+                    <p>{pais.capital && pais.capital[0]}, {pais.translations.spa.common}, {pais.region}</p>
+                </button>
+            ))}
         </div>
     </div>
   )
