@@ -38,16 +38,12 @@ exports.getUsersByCountryId = async (req, res) => {
 
 // Comprobar si un usuario ha añadido un país a su wishlist
 exports.checkWishlist = async (req, res) => {
-    const { idUser, idCountry } = req.body;
+    const idPais = req.params.id;
     try {
-        const wishlist = await wishlistModel.checkWishlist(idUser, idCountry);
-        if (wishlist) {
-            return res.status(200).json({ message: 'El usuario ha añadido el país a su wishlist' });
-        } else {
-            return res.status(404).json({ message: 'El usuario no ha añadido el país a su wishlist' });
-        }
+        const pendientes = await visitadoModel.checkWishlist(idPais);
+        res.json(pendientes);
     } catch (error) {
-        console.error('Error al comprobar si el usuario ha añadido el país a su wishlist:', error);
+        console.error('Error al obtener los pendientes del país:', error);
         res.status(500).json({ message: 'Error interno del servidor' });
     }
 }
