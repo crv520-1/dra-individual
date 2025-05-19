@@ -33,6 +33,17 @@ exports.getUsersByCountryId = async (countryId) => {
     }
 }
 
+// Comprobar si un usuario ha añadido un país a su wishlist
+exports.checkWishlist = async (userId, countryId) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM wishlist WHERE idUsuarios = ? AND idCountry = ?', [userId, countryId]);
+        return rows.length > 0;
+    } catch (error) {
+        console.error('Error al comprobar si el usuario ha añadido el país a su wishlist:', error);
+        throw error;
+    }
+}
+
 // Crear un nuevo wishlist
 exports.createWishlist = async (wishlist) => {
     const query = 'INSERT INTO wishlist (idUsuarios, idCountry) VALUES (?, ?)';

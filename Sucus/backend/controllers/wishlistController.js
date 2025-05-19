@@ -36,6 +36,22 @@ exports.getUsersByCountryId = async (req, res) => {
     }
 }
 
+// Comprobar si un usuario ha añadido un país a su wishlist
+exports.checkWishlist = async (req, res) => {
+    const { idUser, idCountry } = req.body;
+    try {
+        const wishlist = await wishlistModel.checkWishlist(idUser, idCountry);
+        if (wishlist) {
+            return res.status(200).json({ message: 'El usuario ha añadido el país a su wishlist' });
+        } else {
+            return res.status(404).json({ message: 'El usuario no ha añadido el país a su wishlist' });
+        }
+    } catch (error) {
+        console.error('Error al comprobar si el usuario ha añadido el país a su wishlist:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+}
+
 // Crear un nuevo wishlist
 exports.createWishlist = async (req, res) => {
     const { idUsuarios, idCountry } = req.body;
