@@ -47,8 +47,6 @@ export const Visitados = () => {
 
                     if (cca2String) {
                         try {
-                            console.log('cca2String:', cca2String);
-                            console.log(`https://restcountries.com/v3.1/alpha?codes=${cca2String}`);
                             const responsePaises = await axios.get(`https://restcountries.com/v3.1/alpha?codes=${cca2String}`);
                             if (responsePaises.data != null) {
                                 setPaisesVisitados(responsePaises.data);
