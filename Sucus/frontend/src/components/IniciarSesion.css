@@ -8,14 +8,14 @@
 }
 
 .logo {
-    width: 30%;
-    height: 30%;
+    width: 25%;
+    height: 25%;
     object-fit: contain;
 }
 
 .login-title {
     color: #7a2a09;
-    font-size: 4rem;
+    font-size: 3rem;
     margin: 10px 0;
 }
 
