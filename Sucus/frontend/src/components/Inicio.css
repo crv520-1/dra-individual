@@ -9,7 +9,7 @@
 
 .imagen-logo {
     width: 10%;
-    height: 65%;
+    height: 80%;
     object-fit: contain;
 }
 
@@ -60,7 +60,7 @@
     border: none;
     margin-top: 0.75%;
     width: 10%;
-    height: 50%;
+    height: 70%;
 }
 
 .boton-perfil:focus {
