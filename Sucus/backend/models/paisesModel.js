@@ -35,8 +35,8 @@ exports.getPaisByName = async (nombre) => {
 
 // Crear un nuevo pais
 exports.createPais = async (pais) => {
-    const query = 'INSERT INTO paises (urlScraping, nombrePais, cca2) VALUES (?, ?, ?)';
-    const values = [pais.urlScraping, pais.nombrePais, pais.cca2];
+    const query = 'INSERT INTO paises (urlScraping, nombrePais, cca2, scraping) VALUES (?, ?, ?, ?)';
+    const values = [pais.urlScraping, pais.nombrePais, pais.cca2, pais.scraping];
     try {
         const [result] = await db.query(query, values);
         return result.insertId;
