@@ -11,7 +11,6 @@ export const Detalles = () => {
   const location = useLocation();
   const [usuario, setUsuario] = useState(null);
   const [pais, setPais] = useState(null);
-  const [informacion, setInformacion] = useState(null);
   const [paisDB, setPaisDB] = useState(null);
   const [visitado, setVisitado] = useState(false);
   const [pendiente, setPendiente] = useState(false);
@@ -53,21 +52,6 @@ export const Detalles = () => {
                 const responsePais = await axios.get(`http://localhost:3000/api/paises/nombre/${nombrePais}`);
                 if (responsePais.data != null) {
                     setPaisDB(responsePais.data);
-                    try {
-                        const scrapingResponse = await axios.get(`http://localhost:3000/api/scraping/scrape-wikipedia`, {
-                            params: {
-                                url: responsePais.data.urlScraping
-                            }
-                        });
-                        if (scrapingResponse.data != null) {
-                            setInformacion(scrapingResponse.data.firstParagraph);
-                        } else {
-                            alert('Error al obtener la información del país porque da null el response.data.');
-                        }
-                    } catch (error) {
-                        console.error('Error al obtener la información del país:', error);
-                        alert('Error al obtener la información del país.');
-                    }
                 } else {
                     alert('Error al obtener los datos del país porque da null el response.data.');
                 }
@@ -250,10 +234,10 @@ export const Detalles = () => {
             <p>Cargando información del país...</p>
         )}
 
-        {informacion ? (
+        {paisDB ? (
             <div className='container-informacion'>
                 <h2>Información del país</h2>
-                <p>{informacion}</p>
+                <p>{paisDB.scraping}</p>
             </div>
         ) : (
             <p className='texto-cargando'>Cargando información del país...</p>
