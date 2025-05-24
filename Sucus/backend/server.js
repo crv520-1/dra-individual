@@ -19,14 +19,12 @@ const usuarioRoutes = require('./routes/usuario');
 const paisesRoutes = require('./routes/paises');
 const visitadoRoutes = require('./routes/visitado');
 const wishlistRoutes = require('./routes/wishlist');
-const scrapingRoutes = require('./scripts/scraping');
 
 // Usar rutas
 app.use('/api/usuario', usuarioRoutes);
 app.use('/api/paises', paisesRoutes);
 app.use('/api/visitado', visitadoRoutes);
 app.use('/api/wishlist', wishlistRoutes);
-app.use('/api/scraping', scrapingRoutes);
 
 // Iniciar servidor
 app.listen(PORT, () => console.log(`Servidor corriendo en http://localhost:${PORT}`));
