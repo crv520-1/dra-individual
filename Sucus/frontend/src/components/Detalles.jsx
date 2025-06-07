@@ -23,6 +23,9 @@ export const Detalles = () => {
       navigate('/Inicio');
     }
 
+    console.log('Pais recibido:', location.state.pais);
+    console.log('País en estado:', pais);
+
     const obtenerDatosUsuario = async () => {
         const idUsuario = JSON.parse(localStorage.getItem('usuario'));
         if (!idUsuario) {
@@ -42,7 +45,7 @@ export const Detalles = () => {
         }
     }
     obtenerDatosUsuario();
-  }, [navigate, location]);
+  }, [navigate, location, pais]);
 
   useEffect(() => {
     const obtenerDatosPaisYScraping = async () => {

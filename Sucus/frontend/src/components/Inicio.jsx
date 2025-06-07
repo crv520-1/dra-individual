@@ -31,7 +31,7 @@ export const Inicio = () => {
             }
         }
         try {
-            const response = await axios.get('https://restcountries.com/v3.1/all');
+            const response = await axios.get('https://restcountries.com/v3.1/all?fields=name,flags,capital,translations,region,subregion,independent,coatOfArms,cca3');
             const paisesData = response.data;
             setPaises(paisesData);
 
