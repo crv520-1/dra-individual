@@ -33,8 +33,14 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
+# Make the entrypoint script executable
+RUN chmod +x /app/entrypoint.sh
+
 # Expose the port the backend will run on
 EXPOSE 3000
 
-# Command to start the backend server
+# Set the entrypoint script
+ENTRYPOINT ["/app/entrypoint.sh"]
+
+# Command to start the backend server (passed to entrypoint)
 CMD ["node", "server.js"]

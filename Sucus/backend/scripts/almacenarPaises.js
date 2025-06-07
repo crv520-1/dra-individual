@@ -71,7 +71,7 @@ async function scrapeWikipediaFirstParagraph(url) {
 async function almacenarPaises() {
     try {
         console.log('Obteniendo lista de países desde la API...');
-        const response = await axios.get('https://restcountries.com/v3.1/all');
+        const response = await axios.get('https://restcountries.com/v3.1/all?fields=name,translations,cca2');
         const apiPaises = response.data;
         console.log(`Se encontraron ${apiPaises.length} países. Procesando secuencialmente...`);
 

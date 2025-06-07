@@ -24,10 +24,14 @@ services:
       - DB_PASSWORD=CaRLoS14
       - DB_NAME=dra-individual
       - DB_PORT=3306
-      # PUPPETEER_EXECUTABLE_PATH is not needed if Puppeteer uses its bundled Chromium.
-      # The Dockerfile is set up for Puppeteer to download and use its own Chromium.
-      # The args ['--no-sandbox', '--disable-setuid-sandbox'] for puppeteer.launch()
-      # are already in your Sucus/backend/scripts/scraping.js file, which is good for Docker.
+      # Environment variable to control how often the script runs (in seconds)
+      # Default is 2592000 (30 days) if not specified
+      - UPDATE_INTERVAL=2592000
+    volumes:
+      - countries-data:/app/data
     # If you were to run your database as another Docker service, you might add:
     # depends_on:
     #   - your_database_service_name
+
+volumes:
+  countries-data:
