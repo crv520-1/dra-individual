@@ -22,18 +22,42 @@ export const Registrarse = () => {
       alert('Las contraseñas no coinciden.');
       return;
     }
-    let newUsuario = {
-        nombreUsuario: nombre,
-        contrasena: contrasena,
-        fotoPerfil: fotoPerfil
+    if (contrasena.length < 8) {
+        alert('La contraseña debe tener al menos 8 caracteres.');
+        return;
     }
+    
     try {
-        const response = await axios.post('http://localhost:3000/api/usuario', newUsuario);
-        if (response.data && response.data.id) {
-            localStorage.setItem('usuario', JSON.stringify(response.data.id));
-            navigate('/Inicio');
-        } else {
-            alert('Error al registrar el usuario. Inténtalo de nuevo más tarde.');
+        let userExists = false;
+        try {
+            const checkResponse = await axios.get(`http://localhost:3000/api/usuario/nombre/${nombre}`);
+            if (checkResponse.data) {
+                userExists = true;
+                alert('El nombre de usuario ya está en uso. Por favor, elige otro.');
+                return;
+            }
+        } catch (checkError) {
+            if (checkError.response && checkError.response.status !== 404) {
+                console.error('Error al verificar el nombre de usuario:', checkError);
+                alert('Error al verificar el nombre de usuario. Inténtalo de nuevo más tarde.');
+                return;
+            }
+        }
+        
+        if (!userExists) {
+            let newUsuario = {
+                nombreUsuario: nombre,
+                contrasena: contrasena,
+                fotoPerfil: fotoPerfil
+            }
+            
+            const response = await axios.post('http://localhost:3000/api/usuario', newUsuario);
+            if (response.data && response.data.id) {
+                localStorage.setItem('usuario', JSON.stringify(response.data.id));
+                navigate('/Inicio');
+            } else {
+                alert('Error al registrar el usuario. Inténtalo de nuevo más tarde.');
+            }
         }
     } catch (error) {
         console.error('Error al registrar el usuario:', error);

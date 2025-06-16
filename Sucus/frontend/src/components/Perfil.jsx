@@ -61,11 +61,34 @@ export const Perfil = () => {
       alert('Las contraseñas no coinciden.');
       return;
     }
+
+    if (contrasena.length < 8) {
+        alert('La contraseña debe tener al menos 8 caracteres.');
+        return;
+    }
+    
+    if (nombre !== usuario.nombreUsuario) {
+        try {
+            const checkResponse = await axios.get(`http://localhost:3000/api/usuario/nombre/${nombre}`);
+            if (checkResponse.data && checkResponse.data.idUsuario !== usuario.idUsuario) {
+                alert('El nombre de usuario ya está en uso. Por favor, elige otro.');
+                return;
+            }
+        } catch (checkError) {
+            if (checkError.response && checkError.response.status !== 404) {
+                console.error('Error al verificar el nombre de usuario:', checkError);
+                alert('Error al verificar el nombre de usuario. Inténtalo de nuevo más tarde.');
+                return;
+            }
+        }
+    }
+    
     let newUsuario = {
         nombreUsuario: nombre,
         contrasena: contrasena,
         fotoPerfil: fotoPerfil
     }
+    
     try {
         const response = await axios.put(`http://localhost:3000/api/usuario/${usuario.idUsuario}`, newUsuario);
         if (response.data) {
